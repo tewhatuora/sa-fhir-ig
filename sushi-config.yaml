@@ -1,0 +1,163 @@
+# ╭─────────────────────────Commonly Used ImplementationGuide Properties───────────────────────────╮
+# │  The properties below are used to create the ImplementationGuide resource. The most commonly   │
+# │  used properties are included. For a list of all supported properties and their functions,     │
+# │  see: https://fshschool.org/docs/sushi/configuration/.                                         │
+# ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
+id: tewhatuora.specialauthority
+canonical: https://fhir-ig.digital.health.nz/special-authority
+name: HSAAP Special Authority FHIR Implementation Guide
+title: HSAAP Special Authority FHIR Implementation Guide
+description: >-
+  Sector facing FHIR API for submitting Special Authority Applications and
+  enquiring on Special Authority Applications and Approvals.
+status: draft
+version: 0.1.0
+fhirVersion: 4.0.1
+copyrightYear: 2026+
+releaseLabel: draft # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
+# license: CC0-1.0
+jurisdiction: urn:iso:std:iso:3166#NZ "New Zealand"
+publisher:
+  name: Health New Zealand | Te Whatu Ora
+  url: https://www.tewhatuora.govt.nz/
+  email: integration@tewhatuora.govt.nz
+contact:
+  - name: HNZ Integration Team
+    telecom:
+      - system: email
+        value: integration@tewhatuora.govt.nz
+        use: work
+
+dependencies:
+  fhir.org.nz.ig.base:
+    uri: http://fhir.org.nz/ig/base/ImplementationGuide/fhir.org.nz.ig.base
+    version: 3.1.0
+  tewhatuora.digitaltooling: 0.0.11
+
+parameters:
+  show-inherited-invariants: false
+  bundle-references-resolve: true
+  default-contact: true
+  apply-version: false
+  default-version: true
+  display-warnings: true
+  excludettl: true
+  excludexml: true
+  shownav: true
+
+pages:
+  index.md:
+    title: Home
+  submit-application.md:
+    title: Submit Application
+  enquire-application.md:
+    title: Enquire Application
+  enquire-approval.md:
+    title: Enquire Approval
+  form-identity.md:
+    title: Form and Criterion Identity
+  identifiers.md:
+    title: Identifiers and Naming Systems
+  validation-and-outcomes.md:
+    title: Validation and Outcomes
+  security.md:
+    title: Security, Onboarding and Auditing
+  design-notes.md:
+    title: Design Notes and Open Issues
+  artifacts.html:
+    title: FHIR Artifacts
+  changelog.md:
+    title: Change Log
+
+menu:
+  Home: index.html
+  API:
+    Capability Statement: CapabilityStatement-SpecialAuthorityFHIRAPICapabilityStatement.html
+    Submit Application: submit-application.html
+    Enquire Application: enquire-application.html
+    Enquire Approval: enquire-approval.html
+    Validation and Outcomes: validation-and-outcomes.html
+#  Guidance:
+#    Form and Criterion Identity: form-identity.html
+#    Identifiers and Naming Systems: identifiers.html
+#    Security, Onboarding and Auditing: security.html
+#    Design Notes and Open Issues: design-notes.html
+  Artifacts: artifacts.html
+  Support:
+    FHIR Spec: new-tab https://hl7.org/fhir/R4/index.html
+    NZ Base IG: new-tab https://fhir.org.nz/ig/base/
+    Artifacts (JSON): definitions.json.zip
+    Download IG: full-ig.zip
+    Change Log: changelog.html
+
+groups:
+  submission:
+    name: Application Submission
+    description: Profiles used to submit a Special Authority Application with Claim/$submit.
+    resources:
+      - StructureDefinition/sa-submission-bundle
+      - StructureDefinition/sa-claim
+      - StructureDefinition/sa-questionnaire-response
+      - StructureDefinition/sa-questionnaire
+      - StructureDefinition/sa-patient
+      - StructureDefinition/sa-practitioner
+      - StructureDefinition/sa-organization
+  responses:
+    name: Application and Approval Responses
+    description: Profiles returned by Submit Application, Enquire Application and Enquire Approval.
+    resources:
+      - StructureDefinition/sa-response-bundle
+      - StructureDefinition/sa-application-claimresponse
+      - StructureDefinition/sa-approval-claimresponse
+      - StructureDefinition/sa-outcome-operationoutcome
+  extensions:
+    name: Extensions
+    description: Extensions defined by this guide.
+    resources:
+      - StructureDefinition/referring-practitioner
+      - StructureDefinition/request-for-waiver
+      - StructureDefinition/submission-context
+      - StructureDefinition/application-status
+      - StructureDefinition/existing-approval
+      - StructureDefinition/approval-detail
+      - StructureDefinition/approval-coverage
+  api:
+    name: API Definition
+    description: CapabilityStatement, OperationDefinition, and SearchParameters.
+    resources:
+      #- CapabilityStatement/SpecialAuthorityCapabilityStatement
+      - OperationDefinition/sa-claim-submit
+      - SearchParameter/claim-requestor
+      - SearchParameter/claim-supportinginfo
+      - SearchParameter/application-status
+      - SearchParameter/approval-status
+      - SearchParameter/approval-valid-on
+      - SearchParameter/approval-expiring
+      - SearchParameter/approval-provider-id
+      - SearchParameter/approval-version-state
+  terminology:
+    name: Terminology and Naming Systems
+    description: Code systems, value sets and naming systems defined by this guide.
+    resources:
+      - CodeSystem/sa-application-status
+      - ValueSet/sa-application-status
+      - CodeSystem/sa-application-outcome
+      - ValueSet/sa-application-outcome
+      - CodeSystem/sa-approval-status
+      - ValueSet/sa-approval-status
+      - CodeSystem/sa-approval-type
+      - ValueSet/sa-approval-type
+      - CodeSystem/sa-coverage-type
+      - ValueSet/sa-coverage-type
+      - CodeSystem/sa-provider-id-type
+      - ValueSet/sa-provider-id-type
+      - CodeSystem/sa-approval-version-state
+      - ValueSet/sa-approval-version-state
+      - CodeSystem/sa-supporting-info-category
+      - CodeSystem/sa-outcome-code
+      - ValueSet/sa-outcome-code
+      - NamingSystem/sa-application-number
+      - NamingSystem/sa-approval-number
+      - NamingSystem/sa-legacy-practice-id
+      - NamingSystem/sa-pharmacy-claimant-number
+      - NamingSystem/sa-pharmacode

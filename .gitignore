@@ -1,0 +1,14 @@
+.DS_Store
+/.idea
+Thumbs.db
+/fsh-generated
+/input-cache*
+/output
+/temp
+/template
+/gofsh
+/out
+/localscripts/node_modules
+/localscripts/package-lock.json
+fhir-openapi-converter.js
+/oas/
