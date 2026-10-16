@@ -12,7 +12,7 @@ Usage: #definition
 Title: "HSAAP Special Authority FHIR API"
 
 // * url = "https://fhir-ig.digital.health.nz/special-authority/CapabilityStatement/SpecialAuthorityCapabilityStatement"
-* version = "0.1.0"
+* version = "0.1.1"
 * name = "SpecialAuthorityFHIRAPICapabilityStatement"
 * title = "Special Authority FHIR Server Capability Statement"
 * description = "Health NZ | Te Whatu Ora Special Authority FHIR API"

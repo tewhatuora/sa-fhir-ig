@@ -4,7 +4,7 @@
 
 RuleSet: SASearchParameter(id, code)
 * url = "https://fhir-ig.digital.health.nz/special-authority/SearchParameter/{id}"
-* version = "0.1.0"
+* version = "0.1.1"
 * status = #draft
 * experimental = false
 * date = "2026-10-15"

@@ -11,7 +11,7 @@ description: >-
   Sector facing FHIR API for submitting Special Authority Applications and
   enquiring on Special Authority Applications and Approvals.
 status: draft
-version: 0.1.0
+version: 0.1.1
 fhirVersion: 4.0.1
 copyrightYear: 2026+
 releaseLabel: draft # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
