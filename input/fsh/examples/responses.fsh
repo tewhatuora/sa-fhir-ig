@@ -122,7 +122,7 @@ Instance: sa-example-approval-chem
 InstanceOf: SAApprovalClaimResponse
 Usage: #example
 Title: "Example Approval - CHEM"
-Description: "A standard CHEM Approval. Coverage is not returned; it is derivable from the form number and version (D6, D15)."
+Description: "A standard CHEM Approval. Coverage is not returned; it is derivable from the form number and version."
 * meta.lastUpdated = "2026-10-14T10:35:07+13:00"
 * extension[approvalDetail].extension[approvalType].valueCode = #CHEM
 * extension[approvalDetail].extension[status].valueCode = #ACTIVE

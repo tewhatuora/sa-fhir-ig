@@ -13,22 +13,22 @@ Severity: #error
 Expression: "url.contains('|').not() and url.contains('#').not()"
 
 Invariant: sa-q-2
-Description: "Questionnaire.url SHOULD sit under the HSAAP Special Authority Questionnaire canonical base."
+Description: "Questionnaire.url SHOULD sit under the Special Authority Questionnaire canonical base."
 Severity: #warning
 Expression: "url.startsWith('https://fhir-ig.digital.health.nz/special-authority/Questionnaire/')"
 
 Invariant: sa-q-3
-Description: "Only group, display, boolean and string items are permitted (Assumption 1)."
+Description: "Only group, display, boolean and string items are permitted."
 Severity: #error
 Expression: "repeat(item).all(type = 'group' or type = 'display' or type = 'boolean' or type = 'string')"
 
 Invariant: sa-q-4
-Description: "The linkId of every boolean or string item SHALL be a criterionIdentifier: a five character, zero padded numeric string (D18)."
+Description: "The linkId of every boolean or string item SHALL be a criterionIdentifier: a five character, zero padded numeric string."
 Severity: #error
 Expression: "repeat(item).where(type = 'boolean' or type = 'string').all(linkId.matches('^[0-9]{5}$'))"
 
 Invariant: sa-q-5
-Description: "Criteria items SHALL NOT be marked required, so that a partial QuestionnaireResponse is valid against the profile (D14)."
+Description: "Criteria items SHALL NOT be marked required, so that a partial QuestionnaireResponse is valid against the profile."
 Severity: #error
 Expression: "repeat(item).where(type = 'boolean' or type = 'string').all(required.exists().not() or required = false)"
 
@@ -38,17 +38,17 @@ Severity: #error
 Expression: "questionnaire.matches('^[^|#]+([|][^|#]+)?$')"
 
 Invariant: sa-qr-2
-Description: "QuestionnaireResponse.questionnaire SHALL be version-pinned (url|version) by FHIR-native clients. It MAY be unpinned only for submissions from the SOAP to FHIR Broker; this rule is enforced by the API against the authenticated client, so the profile only warns."
+Description: "QuestionnaireResponse.questionnaire SHALL be version-pinned (url|version). This rule is enforced by the API against the authenticated client, so the profile only warns."
 Severity: #warning
 Expression: "questionnaire.contains('|')"
 
 Invariant: sa-qr-3
-Description: "Every answer SHALL be valueBoolean or valueString (Assumption 1), and an item SHALL carry at most one answer."
+Description: "Every answer SHALL be valueBoolean or valueString, and an item SHALL carry at most one answer."
 Severity: #error
 Expression: "(item | item.repeat(item | answer.item)).all(answer.count() <= 1 and answer.all(value is boolean or value is string))"
 
 Invariant: sa-qr-4
-Description: "The linkId of every answered item SHALL be a five character, zero padded criterionIdentifier (D18)."
+Description: "The linkId of every answered item SHALL be a five character, zero padded criterionIdentifier."
 Severity: #error
 Expression: "(item | item.repeat(item | answer.item)).where(answer.exists()).all(linkId.matches('^[0-9]{5}$'))"
 

@@ -4,7 +4,7 @@
 
 RuleSet: SASearchParameter(id, code)
 * url = "https://fhir-ig.digital.health.nz/special-authority/SearchParameter/{id}"
-* version = "0.1.1"
+* version = "0.1.2"
 * status = #draft
 * experimental = false
 * date = "2026-10-15"
@@ -20,7 +20,7 @@ Usage: #definition
 Title: "Claim requestor"
 * insert SASearchParameter(claim-requestor, requestor)
 * name = "ClaimRequestor"
-* description = "The Applicant of the Special Authority Application. FHIR R4 Claim has no requestor element, so the Applicant is carried in Claim.provider and this parameter evaluates Claim.provider. It preserves the API contract requestor:Practitioner.identifier and _include=Claim:requestor. The chained identifier accepts the HPI CPN system or an NZ responsible-authority registration system. The core provider parameter is equivalent."
+* description = "The Applicant of the Special Authority Application. FHIR R4 Claim has no requestor element, so the Applicant is carried in Claim.provider and this parameter evaluates Claim.provider. It supports requestor:Practitioner.identifier and _include=Claim:requestor. The chained identifier accepts the HPI CPN system or an NZ responsible-authority registration system. The core provider parameter is equivalent."
 * base[0] = #Claim
 * type = #reference
 * expression = "Claim.provider"
@@ -47,7 +47,7 @@ Usage: #definition
 Title: "Application status"
 * insert SASearchParameter(application-status, application-status)
 * name = "ApplicationStatus"
-* description = "HSAAP Application status: SUBMITTED, PENDING_REVIEW, CANCELLED or DONE. Claim.status cannot express these values. Maps to the Application Store status filter."
+* description = "Application status: SUBMITTED, PENDING_REVIEW, CANCELLED or DONE. Claim.status cannot express these values."
 * base[0] = #Claim
 * base[1] = #ClaimResponse
 * type = #token
@@ -116,6 +116,6 @@ Usage: #definition
 Title: "Approval version state"
 * insert SASearchParameter(approval-version-state, approval-version-state)
 * name = "ApprovalVersionState"
-* description = "Controls which Approval versions are returned: LATEST (default), PREVIOUS or ALL. This is a result-control parameter with no FHIRPath expression - an Approval version is a new Approval Store row, not a FHIR resource version (D17). Each version is returned as a distinct ClaimResponse ordered by meta.lastUpdated. Values are from the SA Approval Version State value set."
+* description = "Controls which Approval versions are returned: LATEST (default), PREVIOUS or ALL. This is a result-control parameter with no FHIRPath expression - Approval versions are not FHIR resource versions. Each version is returned as a distinct ClaimResponse ordered by meta.lastUpdated. Values are from the SA Approval Version State value set."
 * base[0] = #ClaimResponse
 * type = #token

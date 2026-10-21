@@ -67,7 +67,7 @@ Parent: OperationOutcome
 Id: sa-outcome-operationoutcome
 Title: "SA Outcome OperationOutcome"
 Description: """
-Renders the single business outcome of a Special Authority Application (D9) in a `$submit` response. The machine readable
+Renders the single business outcome of a Special Authority Application in a `$submit` response. The machine readable
 reason (`outcomeCode`) is carried in `issue.details.coding` and the human readable reason (`outcomeReason`) in
 `issue.diagnostics`.
 

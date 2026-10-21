@@ -9,10 +9,10 @@ RuleSet: SearchParam(name, definition, type, doc)
 Instance: SpecialAuthorityFHIRAPICapabilityStatement
 InstanceOf: HnzToolingCapabilityStatement
 Usage: #definition
-Title: "HSAAP Special Authority FHIR API"
+Title: "Special Authority FHIR API"
 
 // * url = "https://fhir-ig.digital.health.nz/special-authority/CapabilityStatement/SpecialAuthorityCapabilityStatement"
-* version = "0.1.1"
+* version = "0.1.2"
 * name = "SpecialAuthorityFHIRAPICapabilityStatement"
 * title = "Special Authority FHIR Server Capability Statement"
 * description = "Health NZ | Te Whatu Ora Special Authority FHIR API"
@@ -74,7 +74,7 @@ Title: "HSAAP Special Authority FHIR API"
 * rest[0].resource[0] insert SearchParam(patient, http://hl7.org/fhir/SearchParameter/Claim-patient, reference, Supports the chained form patient.identifier=nhi-system|NHI only.)
 * rest[0].resource[0] insert SearchParam(requestor, https://fhir-ig.digital.health.nz/special-authority/SearchParameter/claim-requestor, reference, Supports requestor:Practitioner.identifier with the HPI CPN system or an NZ registration authority system.)
 * rest[0].resource[0] insert SearchParam(application-status, https://fhir-ig.digital.health.nz/special-authority/SearchParameter/application-status, token, SUBMITTED | PENDING_REVIEW | CANCELLED | DONE)
-* rest[0].resource[0] insert SearchParam(created, http://hl7.org/fhir/SearchParameter/Claim-created, date, Submission date range: ge and le map to submittedFrom and submittedTo.)
+* rest[0].resource[0] insert SearchParam(created, http://hl7.org/fhir/SearchParameter/Claim-created, date, Submission date range using ge and le.)
 * rest[0].resource[0].operation[0].name = "submit"
 * rest[0].resource[0].operation[0].definition = "https://fhir-ig.digital.health.nz/special-authority/OperationDefinition/sa-claim-submit"
 

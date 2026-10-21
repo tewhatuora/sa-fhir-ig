@@ -1,6 +1,5 @@
 // ---------------------------------------------------------------------------
 // Naming systems
-// The URIs below are placeholders pending confirmation (see Design Notes).
 // ---------------------------------------------------------------------------
 
 RuleSet: SANamingSystem(name, kind, uri)
@@ -20,21 +19,21 @@ InstanceOf: NamingSystem
 Usage: #definition
 Title: "SA Application Number"
 * insert SANamingSystem(SAApplicationNumber, identifier, https://fhir-ig.digital.health.nz/special-authority/ns/application-number)
-* description = "Special Authority Application Number allocated by the special-authority-application-service. The only identifier carried on Claim.identifier (D23)."
+* description = "Special Authority Application Number, allocated on submission. The only identifier carried on Claim.identifier."
 
 Instance: sa-approval-number
 InstanceOf: NamingSystem
 Usage: #definition
 Title: "SA Approval Number"
 * insert SANamingSystem(SAApprovalNumber, identifier, https://fhir-ig.digital.health.nz/special-authority/ns/approval-number)
-* description = "Special Authority Approval Number. Carried on ClaimResponse.identifier and ClaimResponse.preAuthRef (D23)."
+* description = "Special Authority Approval Number. Carried on ClaimResponse.identifier and ClaimResponse.preAuthRef."
 
 Instance: sa-legacy-practice-id
 InstanceOf: NamingSystem
 Usage: #definition
-Title: "SA Legacy Practice Id"
+Title: "SA Practice Id"
 * insert SANamingSystem(SALegacyPracticeId, identifier, https://fhir-ig.digital.health.nz/special-authority/ns/legacy-practice-id)
-* description = "Legacy Special Authority Practice Id (HL7 v2 ZSS.1), used on the submitting Organization."
+* description = "Special Authority Practice Id, used on the submitting Organization."
 
 Instance: sa-pharmacy-claimant-number
 InstanceOf: NamingSystem
@@ -48,4 +47,4 @@ InstanceOf: NamingSystem
 Usage: #definition
 Title: "SA Pharmacode"
 * insert SANamingSystem(SAPharmacode, codesystem, https://fhir-ig.digital.health.nz/special-authority/ns/pharmacode)
-* description = "Pharmac Pharmacode. Placeholder URI, to be replaced by the authoritative Pharmacode system URI if one is published."
+* description = "Pharmac Pharmacode."

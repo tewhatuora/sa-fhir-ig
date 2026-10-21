@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Patient, Practitioner and Organization - derived from NZ Base (D4)
+// Patient, Practitioner and Organization - derived from NZ Base
 // ---------------------------------------------------------------------------
 
 Profile: SAPatient
@@ -7,13 +7,13 @@ Parent: $NzPatient
 Id: sa-patient
 Title: "SA Patient"
 Description: """
-The patient who is the subject of a Special Authority Application. Derived from NZ Base `NzPatient` (D4), which supplies
+The patient who is the subject of a Special Authority Application. Derived from NZ Base `NzPatient`, which supplies
 the `NzAddress` datatype and the NZ Base suburb extension.
 
 The NHI is mandatory. Suburb is carried **only** in the NZ Base suburb extension - consumers SHALL NOT fall back to
 `Address.district` or parse `Address.line`. NHI addresses are not always validated (no fixed abode, overseas and
-unknown addresses), so suburb is not treated as mandatory. `NzAddress` building name, domicile code and geocode have no
-home in the Application Data schema and are dropped by the API.
+unknown addresses), so suburb is not treated as mandatory. `NzAddress` building name, domicile code and geocode are not
+retained and are dropped by the API.
 """
 * ^status = #draft
 * identifier 1..* MS
@@ -41,10 +41,10 @@ Id: sa-practitioner
 Title: "SA Practitioner"
 Description: """
 A practitioner on a Special Authority Application: the **Applicant** (referenced from `QuestionnaireResponse.author`
-and `Claim.requestor`) or the **Referrer** (referenced from the `referring-practitioner` extension). Derived from NZ
-Base `NzPractitioner` (D4).
+and `Claim.provider`) or the **Referrer** (referenced from the `referring-practitioner` extension). Derived from NZ
+Base `NzPractitioner`.
 
-The role is carried by which element refers to the Practitioner, not by a role code (D5). `Practitioner` is used rather
+The role is carried by which element refers to the Practitioner, not by a role code. `Practitioner` is used rather
 than `PractitionerRole` because organisational context is not required.
 
 A registration identifier is mandatory. The **registration authority is carried in `Identifier.system`**, using the
@@ -75,9 +75,9 @@ Parent: $NzOrganization
 Id: sa-organization
 Title: "SA Organization"
 Description: """
-The submitting practice or facility. Optional in a submission. Derived from NZ Base `NzOrganization` (D4).
+The submitting practice or facility. Optional in a submission. Derived from NZ Base `NzOrganization`.
 
-The legacy Practice Id (`ZSS.1`) is carried on `identifier` using the SA Legacy Practice Id naming system. Where both the
+The Special Authority Practice Id is carried on `identifier` using the SA Practice Id naming system. Where both the
 payload and the authenticated context identify a practice and they disagree, the submission is rejected.
 """
 * ^status = #draft

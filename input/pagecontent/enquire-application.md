@@ -18,7 +18,7 @@ GET [base]/Claim?identifier=https://fhir-ig.digital.health.nz/special-authority/
 
 The `_include` parameters resolve the full shape produced at submission - `Claim`, `QuestionnaireResponse`, `Patient` and
 `Practitioner` - so a retrieval and a submission return structurally identical content. `Claim:requestor` is a custom
-search parameter that resolves to the Applicant in `Claim.provider` (see [Design Notes](design-notes.html#claim-requestor)).
+search parameter that resolves to the Applicant in `Claim.provider` (see [Modelling Notes](design-notes.html#claim-requestor)).
 
 On retrieval, `Claim.identifier` carries the Application Number, and asserted source context is returned in the
 [submission-context](StructureDefinition-submission-context.html) extension. The stored source payload is never returned.
@@ -32,7 +32,7 @@ GET [base]/ClaimResponse?request.identifier=https://fhir-ig.digital.health.nz/sp
 
 Returns an [SA Application ClaimResponse](StructureDefinition-sa-application-claimresponse.html) whose
 [application-status](StructureDefinition-application-status.html) extension carries the same `status`, `outcome`,
-`outcomeCode` and `outcomeReason` returned synchronously at submission (D22). `preAuthRef` carries the Approval Number
+`outcomeCode` and `outcomeReason` returned synchronously at submission. `preAuthRef` carries the Approval Number
 where the Application was approved. `_elements` limits the response to the status and Approval Number.
 
 `existing-approval` is **not** returned on enquiry. A conflicting Approval is resolved at submission, so that detail is
@@ -57,7 +57,7 @@ GET [base]/Claim?created=ge2026-01-01&created=le2026-01-31
 | `patient.identifier` | core, chained | NHI. |
 | `requestor:Practitioner.identifier` | [claim-requestor](SearchParameter-claim-requestor.html), chained | Supply **either** the HPI CPN **or** a registration identifier. The registration authority is the identifier system (e.g. Medical Council), the registration number the value. |
 | `application-status` | [application-status](SearchParameter-application-status.html) | `SUBMITTED`, `PENDING_REVIEW`, `CANCELLED`, `DONE`. `Claim.status` cannot express these. |
-| `created` | core | `ge` / `le` map to submitted-from and submitted-to. |
+| `created` | core | `ge` / `le` bound the submission date range. |
 {:.grid}
 
 Filters may be combined. Search results are **summary** representations: referenced `Patient`, `Practitioner`,
@@ -71,5 +71,5 @@ GET [base]/ClaimResponse?identifier=https://fhir-ig.digital.health.nz/special-au
     &_include=ClaimResponse:request
 ```
 
-The Approval Number is an adjudication result, so it is carried on `ClaimResponse`, never on `Claim` (D23). The
+The Approval Number is an adjudication result, so it is carried on `ClaimResponse`, never on `Claim`. The
 `_include` returns the originating `Claim` in the same response.

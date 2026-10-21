@@ -32,22 +32,17 @@ HPI CPN system and any of these registration systems.
 
 ### Special Authority identifiers
 
-<div class="dragon">
-The URIs below are <b>placeholders</b> under this guide's canonical, pending confirmation of any
-existing authoritative namespaces.
-</div>
-
 | Identifier | Naming system | Used on |
 |---|---|---|
 | Application Number | [SA Application Number](NamingSystem-sa-application-number.html) | `Claim.identifier`, `ClaimResponse.request.identifier` |
 | Approval Number | [SA Approval Number](NamingSystem-sa-approval-number.html) | `ClaimResponse.identifier`, `ClaimResponse.preAuthRef` (value only) |
-| Legacy Practice Id | [SA Legacy Practice Id](NamingSystem-sa-legacy-practice-id.html) | `Organization.identifier` |
+| Practice Id | [SA Practice Id](NamingSystem-sa-legacy-practice-id.html) | `Organization.identifier` |
 | Pharmacy claimant number | [SA Pharmacy Claimant Number](NamingSystem-sa-pharmacy-claimant-number.html) | `approval-detail.providerId` |
 | Pharmacode | [SA Pharmacode](NamingSystem-sa-pharmacode.html) | `Claim.item.productOrService.coding` (NPPA / panel only) |
 {:.grid}
 
 The Application Number is the only identifier carried on `Claim`. The Approval Number is an adjudication result and is
-carried only on `ClaimResponse` (D23). The internal `applicationId` is never exposed over FHIR.
+carried only on `ClaimResponse`.
 
 CTPP IDs use the NZMT system `http://nzmt.org.nz`.
 

@@ -60,7 +60,7 @@ Instance: sa-example-practice
 InstanceOf: SAOrganization
 Usage: #example
 Title: "Example Submitting Practice"
-Description: "Example submitting practice with an HPI Facility identifier and a legacy Practice Id."
+Description: "Example submitting practice with an HPI Facility identifier and a Practice Id."
 * identifier[hpiFacility].system = $HPI-FAC
 * identifier[hpiFacility].value = "FZZ999-B"
 * identifier[legacyPracticeId].system = $SA-LegacyPracticeId

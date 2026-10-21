@@ -5,13 +5,13 @@
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 id: tewhatuora.specialauthority
 canonical: https://fhir-ig.digital.health.nz/special-authority
-name: HSAAP Special Authority FHIR Implementation Guide
-title: HSAAP Special Authority FHIR Implementation Guide
+name: Special Authority FHIR Implementation Guide
+title: Special Authority FHIR Implementation Guide
 description: >-
   Sector facing FHIR API for submitting Special Authority Applications and
   enquiring on Special Authority Applications and Approvals.
 status: draft
-version: 0.1.1
+version: 0.1.2
 fhirVersion: 4.0.1
 copyrightYear: 2026+
 releaseLabel: draft # ci-build | draft | qa-preview | ballot | trial-use | release | update | normative+trial-use
@@ -63,7 +63,7 @@ pages:
   security.md:
     title: Security, Onboarding and Auditing
   design-notes.md:
-    title: Design Notes and Open Issues
+    title: Modelling Notes
   artifacts.html:
     title: FHIR Artifacts
   changelog.md:
@@ -81,7 +81,7 @@ menu:
 #    Form and Criterion Identity: form-identity.html
 #    Identifiers and Naming Systems: identifiers.html
 #    Security, Onboarding and Auditing: security.html
-#    Design Notes and Open Issues: design-notes.html
+#    Modelling Notes: design-notes.html
   Artifacts: artifacts.html
   Support:
     FHIR Spec: new-tab https://hl7.org/fhir/R4/index.html

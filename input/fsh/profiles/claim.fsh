@@ -27,12 +27,12 @@ a `Claim` with `use = preauthorization`. Submitted inside an SA Submission Bundl
 * `provider` references the Applicant - the same `Practitioner` as `QuestionnaireResponse.author`. FHIR R4 `Claim` has
   no `requestor` element; the custom `requestor` search parameter evaluates `Claim.provider`, so
   `requestor:Practitioner.identifier` searches and `_include=Claim:requestor` resolve to the Applicant.
-* `identifier` carries the **Application Number only** (D23). It is absent on submission and is populated by the API.
+* `identifier` carries the **Application Number only**. It is absent on submission and is populated by the API.
 * `item` is used **only** for NPPA and panel approval Applications, where no form declares coverage. Standard Special
-  Authority Applications SHALL NOT supply `item`; coverage is derived from the resolved form at decision time (D6).
+  Authority Applications SHALL NOT supply `item`; coverage is derived from the resolved form at decision time.
 * Financial elements are constrained out. Monetary amounts are never present.
 * `insurance` is mandatory in FHIR R4 `Claim`. It carries a logical reference to the Pharmaceutical Schedule and has no
-  other meaning (see Design Notes).
+  other meaning (see Modelling Notes).
 """
 * ^status = #draft
 * extension contains
@@ -58,7 +58,7 @@ a `Claim` with `use = preauthorization`. Submitted inside an SA Submission Bundl
 * provider MS
 * provider only Reference(SAPractitioner)
 * provider ^short = "The Applicant - same Practitioner as QuestionnaireResponse.author"
-* provider ^comment = "The detailed design refers to Claim.requestor, which does not exist in FHIR R4 Claim. Claim.provider ('the provider responsible for the preauthorization') is used instead. The custom 'requestor' search parameter on Claim evaluates Claim.provider so the API contract is preserved."
+* provider ^comment = "FHIR R4 Claim has no requestor element, so Claim.provider ('the provider responsible for the preauthorization') carries the Applicant. The custom 'requestor' search parameter on Claim evaluates Claim.provider, so requestor searches behave the same on Claim and ClaimResponse."
 * priority = $processpriority#normal
 * fundsReserve 0..0
 * related 0..0
@@ -138,12 +138,12 @@ Description: """
 The status and outcome of a Special Authority Application. Returned in the SA Response Bundle from `Claim/$submit`, and
 from Application Enquiry (`GET [base]/ClaimResponse?request.identifier=...`).
 
-* HSAAP status, outcome, outcome code and outcome reason are carried in the `application-status` extension. The shape is
-  identical at submission and enquiry (D22).
+* Application status, outcome, outcome code and outcome reason are carried in the `application-status` extension. The shape is
+  identical at submission and enquiry.
 * `existing-approval` is returned **only** on the synchronous `$submit` response, where the Application was declined
   because a conflicting Approval exists.
-* The Approval Number, once approved, is carried on `identifier` and `preAuthRef` (D23).
-* `error` carries the single machine readable outcome code (D9). The same code and reason are also rendered in the
+* The Approval Number, once approved, is carried on `identifier` and `preAuthRef`.
+* `error` carries the single machine readable outcome code. The same code and reason are also rendered in the
   `OperationOutcome` in the response Bundle.
 * `status`, `type`, `use`, `insurer` and `outcome` are mandatory in FHIR R4. `outcome` is set per the mapping on the
   Validation and Outcomes page; it does not replace `application-status`.
@@ -185,7 +185,7 @@ from Application Enquiry (`GET [base]/ClaimResponse?request.identifier=...`).
 * preAuthPeriod ^short = "Approval effective and expiry dates"
 * insert SANoFinancialClaimResponse
 * error 0..1 MS
-* error ^short = "The single outcome code (fail fast - D9)"
+* error ^short = "The single outcome code (fail fast)"
 * error.itemSequence 0..0
 * error.detailSequence 0..0
 * error.subDetailSequence 0..0
@@ -197,18 +197,18 @@ Id: sa-approval-claimresponse
 Title: "SA Approval ClaimResponse"
 Description: """
 A Special Authority Approval, returned by Approval Enquiry (`GET [base]/ClaimResponse?...`). Constructed fresh from the
-current Approval Store record on every enquiry; it is **not** a replay of the ClaimResponse returned at submission.
+current Approval record on every enquiry; it is **not** a replay of the ClaimResponse returned at submission.
 
 * `identifier` and `preAuthRef` carry the Approval Number; `preAuthPeriod` the effective and expiry dates. A lifetime
   Approval carries a far-future expiry date - there is no sentinel value.
-* `requestor` is the prescribing Practitioner who authored the originating Application (D24). The provider (pharmacy)
+* `requestor` is the prescribing Practitioner who authored the originating Application. The provider (pharmacy)
   is carried in the `approval-detail` extension.
-* Approval type, status, form number and form version are carried in the `approval-detail` extension (D16).
-* Coverage is carried in `approval-coverage` only for NPPA and panel Approvals (D15).
-* Approval versions are **not** FHIR resource versions (D17). `meta.versionId` is not used and `vread`/`_history` are not
+* Approval type, status, form number and form version are carried in the `approval-detail` extension.
+* Coverage is carried in `approval-coverage` only for NPPA and panel Approvals.
+* Approval versions are **not** FHIR resource versions. `meta.versionId` is not used and `vread`/`_history` are not
   supported. When `approval-version-state=ALL` returns several versions, each is a distinct ClaimResponse and recency is
-  carried on `meta.lastUpdated` (the Approval's `createdOn`).
-* `status` is always `active` and `outcome` always `complete`. Both are mandatory in FHIR R4 and carry no HSAAP meaning;
+  carried on `meta.lastUpdated` (when the Approval version was created).
+* `status` is always `active` and `outcome` always `complete`. Both are mandatory in FHIR R4 and carry no Special Authority meaning;
   the Approval status is `approval-detail.status`.
 """
 * ^status = #draft
@@ -216,7 +216,7 @@ current Approval Store record on every enquiry; it is **not** a replay of the Cl
 * meta 1..1
 * meta.versionId 0..0
 * meta.lastUpdated 1..1 MS
-* meta.lastUpdated ^short = "Approval version createdOn - orders versions by recency (D17)"
+* meta.lastUpdated ^short = "When the Approval version was created - orders versions by recency"
 * extension contains
     ApprovalDetail named approvalDetail 1..1 MS and
     ApprovalCoverage named approvalCoverage 0..1 MS
@@ -242,7 +242,7 @@ current Approval Store record on every enquiry; it is **not** a replay of the Cl
 * request only Reference(SAClaim)
 * request ^short = "The originating Application, where still retrievable"
 * outcome = #complete
-* outcome ^comment = "Always complete. Carries no HSAAP meaning."
+* outcome ^comment = "Always complete. Carries no Special Authority meaning."
 * preAuthRef 1..1 MS
 * preAuthPeriod 1..1 MS
 * preAuthPeriod.start 1..1 MS

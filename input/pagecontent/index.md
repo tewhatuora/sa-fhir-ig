@@ -1,20 +1,16 @@
 ### Introduction
 
-This Implementation Guide defines the **HSAAP Special Authority sector facing FHIR API**. It allows Practice Management
-Systems (PMS), the SOAP to FHIR Broker, the Special Authority application in the Population Health Salesforce org, and
-any future FHIR-native sector client to:
+This Implementation Guide defines the **Special Authority FHIR API** provided by Health New Zealand | Te Whatu Ora. It
+allows Practice Management Systems (PMS) and other sector clients to:
 
 * **submit** Special Authority Applications, and
 * **enquire** on existing Special Authority Applications and Approvals.
 
-The API is hosted in MuleSoft, which validates each request against the profiles in this guide, translates it to the
-RESTful API of the *special-authority-application-service*, and translates the response back into FHIR. The
-*special-authority-application-service* neither produces nor consumes FHIR.
+The API validates each request against the profiles in this guide and returns its responses as FHIR resources.
 
 <div class="dragon">
-<b>Draft.</b> This guide is under active development and is derived from <i>HSAAP Special Authority - Sector Facing APIs
-Detailed Design</i> v0.8.1. Several elements of that design could not be represented exactly in FHIR R4; each departure
-is listed on the <a href="design-notes.html">Design Notes and Open Issues</a> page.
+<b>Draft.</b> This guide is under active development and may change. Where FHIR R4 required a specific modelling
+choice, it is explained on the <a href="design-notes.html">Modelling Notes</a> page.
 </div>
 
 ### Resource model
@@ -56,16 +52,15 @@ and `ClaimResponse` are constrained out rather than left unused and optional.
 | [Retrieve / Search Approvals](enquire-approval.html) | `GET [base]/ClaimResponse?...` |
 {:.grid}
 
-The full API is described by the [HSAAP Special Authority FHIR API CapabilityStatement](CapabilityStatement-SpecialAuthorityFHIRAPICapabilityStatement.html).
+The full API is described by the [Special Authority FHIR API CapabilityStatement](CapabilityStatement-SpecialAuthorityFHIRAPICapabilityStatement.html).
 
 ### Scope
 
 **In scope:** the FHIR profiles, extensions, search parameters and operation used by the sector facing API; the
 rules a submitter must follow; and how outcomes are rendered.
 
-**Out of scope:** business rule content and rule evaluation sequence (Application Decisioning design); HL7 v2 to FHIR
-translation (SOAP to FHIR Broker); decisioning; the Application Store, Approval/Entitlement Store and Pharmaceutical
-Schedule internal APIs; and authentication and authorisation mechanics (Security design), which are summarised on
+**Out of scope:** the content and evaluation order of Special Authority business rules; clinical decisioning; and the
+detailed mechanics of authentication and authorisation, which are summarised on
 [Security, Onboarding and Auditing](security.html).
 
 ### Dependencies

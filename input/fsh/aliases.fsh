@@ -1,6 +1,5 @@
 // ---------------------------------------------------------------------------
 // Aliases
-// If the IG slug changes (open item O9), update every $SA-* alias below.
 // ---------------------------------------------------------------------------
 
 // NZ Base profiles and extensions
@@ -25,7 +24,7 @@ Alias: $claim-type = http://terminology.hl7.org/CodeSystem/claim-type
 Alias: $processpriority = http://terminology.hl7.org/CodeSystem/processpriority
 Alias: $issue-type = http://hl7.org/fhir/issue-type
 
-// HSAAP Special Authority naming systems (placeholders pending confirmation; see design-notes)
+// Special Authority naming systems
 Alias: $SA-ApplicationNumber = https://fhir-ig.digital.health.nz/special-authority/ns/application-number
 Alias: $SA-ApprovalNumber = https://fhir-ig.digital.health.nz/special-authority/ns/approval-number
 Alias: $SA-LegacyPracticeId = https://fhir-ig.digital.health.nz/special-authority/ns/legacy-practice-id

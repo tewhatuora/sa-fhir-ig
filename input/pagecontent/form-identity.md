@@ -1,8 +1,8 @@
 ### The form canonical
 
-A Special Authority form is identified by a `Questionnaire` canonical minted by Health NZ under this guide (D3). The
-canonical identifies the HNZ interpretation of a Pharmac form at a point in time: the version is computed by the HNZ
-ingest, and the `criterionIdentifier` values are HNZ-derived metadata that Pharmac neither authors nor guarantees.
+A Special Authority form is identified by a `Questionnaire` canonical minted by Health NZ under this guide. The
+canonical identifies the Health NZ interpretation of a Pharmac form at a point in time: the version is computed by
+Health NZ, and the `criterionIdentifier` values are Health NZ derived metadata that Pharmac neither authors nor guarantees.
 
 `QuestionnaireResponse.questionnaire` carries both parts of the form identity in one element:
 
@@ -24,34 +24,27 @@ Rules:
 ### The canonical is an identifier, not an address (Phase 1)
 
 **No `Questionnaire` resource is published at the form canonical in Phase 1.** The canonical is an identifier only. Form
-definitions remain base64 encoded XML and MathML retrieved from the *pharmac-direct-query-service*. The
+definitions continue to be distributed in their existing XML format. The
 [SA Questionnaire](StructureDefinition-sa-questionnaire.html) profile documents the constraints the canonical and items
 must meet, and the [SA9999 example](Questionnaire-SA9999.html) is fictional and illustrative only.
 
 If the national Online Questionnaire Standard (revision of HISO 10014-2) fixes a canonical naming convention, this guide
 will conform to it.
 
-### Version pinning and the SOAP to FHIR Broker
+### Version pinning
 
-`QuestionnaireResponse.questionnaire` **SHALL be version-pinned** by FHIR-native clients. The API rejects an unpinned
-canonical from any client other than the SOAP to FHIR Broker.
+`QuestionnaireResponse.questionnaire` **SHALL be version-pinned**. The API rejects an unpinned canonical. Because this
+rule is enforced by the API against the authenticated client, the profile expresses it as a **warning** (invariant
+`sa-qr-2`).
 
-The Broker cannot supply a form version: the legacy HL7 message carries only `ZCR-1` (form number), and the PMS to
-HealthLink contract cannot change. Broker submissions therefore carry an **unpinned** canonical. Because pinning depends on
-the authenticated channel, the profile expresses it as a **warning** (invariant `sa-qr-2`); enforcement is by the API.
-
-This is safe today because a form number resolves to exactly one definition. The service resolves it, validates against
-it, and persists the resolved form version on the Application regardless of channel, so every stored Application carries
-the full correlation key. It will **not** remain safe once Pharmac introduce form versioning.
-
-One consequence is accepted: the two channels produce structurally different QuestionnaireResponses for the same clinical
-event - one pinned, one not.
+The service persists the resolved form version on every Application, so every stored Application carries the full
+correlation key.
 
 ### Criterion identity
 
-The `linkId` of each answered item is the **`criterionIdentifier`**, derived by the *pharmac-direct-query-service* from
-the `id` of each `ci` element in the Special Authority criteria XML. It is a **five character, zero padded numeric
-string** (e.g. `00017`), matching the legacy `ZCU-3` format (D18; invariants `sa-q-4`, `sa-qr-4`).
+The `linkId` of each answered item is the **`criterionIdentifier`**, derived by Health NZ from the identifier of each
+criterion in the Special Authority form definition. It is a **five character, zero padded numeric string** (e.g.
+`00017`) (invariants `sa-q-4`, `sa-qr-4`).
 
 A `criterionIdentifier` is meaningful only alongside the form it was derived from. The correlation key for a clinical
 answer is:

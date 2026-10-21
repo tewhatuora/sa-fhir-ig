@@ -17,7 +17,7 @@ RuleSet: SAValueSet
 CodeSystem: SAApplicationStatusCS
 Id: sa-application-status
 Title: "SA Application Status"
-Description: "Lifecycle status of a Special Authority Application held by the special-authority-application-service. Deliberately not mapped to QuestionnaireResponse.status or Claim.status, neither of which can distinguish PENDING_REVIEW from DONE."
+Description: "Lifecycle status of a Special Authority Application. Deliberately not mapped to QuestionnaireResponse.status or Claim.status, neither of which can distinguish PENDING_REVIEW from DONE."
 * insert SACodeSystem
 * #SUBMITTED "Submitted" "The Application has been received and accepted for assessment."
 * #PENDING_REVIEW "Pending review" "The Application requires manual review before an outcome can be determined."
@@ -54,7 +54,7 @@ Description: "All SA Application outcome codes."
 CodeSystem: SAApprovalStatusCS
 Id: sa-approval-status
 Title: "SA Approval Status"
-Description: "Status of a Special Authority Approval in the Approval/Entitlement Store. Carried in the approval-detail extension because ClaimResponse.status (financial resource status) cannot express these meanings."
+Description: "Status of a Special Authority Approval. Carried in the approval-detail extension because ClaimResponse.status (financial resource status) cannot express these meanings."
 * insert SACodeSystem
 * #ACTIVE "Active" "The Approval is in force."
 * #CANCELLED "Cancelled" "The Approval has been cancelled."
@@ -72,7 +72,7 @@ Description: "All SA Approval status codes."
 CodeSystem: SAApprovalTypeCS
 Id: sa-approval-type
 Title: "SA Approval Type"
-Description: "Type of Special Authority Approval (legacy ZST.8). **Draft and incomplete** - the design lists CHEM, HOSP, EXCP, TEMPLETON 'etc.'. The full list must be confirmed against the Approval/Entitlement Store before publication."
+Description: "Type of Special Authority Approval. This code system is a fragment; further approval types may be added."
 * insert SACodeSystem
 * ^content = #fragment
 * #CHEM "Chemical" "Standard Special Authority Approval derived from a Pharmaceutical Schedule form."
@@ -93,7 +93,7 @@ Description: "All SA Approval type codes."
 CodeSystem: SACoverageTypeCS
 Id: sa-coverage-type
 Title: "SA Approval Coverage Type"
-Description: "Coverage variants returned on the approval-coverage extension. SCHEDULE_HIERARCHY coverage exists in the Approval Store but is not returned over FHIR (D15) and so is not included."
+Description: "Coverage variants returned on the approval-coverage extension. Schedule-derived (SCHEDULE_HIERARCHY) coverage is not returned over FHIR and so is not included."
 * insert SACodeSystem
 * #EXPLICIT_PHARMACEUTICALS "Explicit pharmaceuticals" "Coverage is an explicit list of pharmaceuticals."
 * #PRODUCT_CATEGORY "Product category" "Coverage is a product category."
@@ -127,7 +127,7 @@ Description: "All SA provider id type codes."
 CodeSystem: SAApprovalVersionStateCS
 Id: sa-approval-version-state
 Title: "SA Approval Version State"
-Description: "Values for the approval-version-state search parameter. **Draft** - code names other than ALL must be confirmed against the Approval Store versionState values."
+Description: "Values for the approval-version-state search parameter."
 * insert SACodeSystem
 * #LATEST "Latest" "Only the current version of each Approval (default)."
 * #PREVIOUS "Previous" "Only superseded versions of each Approval."
@@ -154,7 +154,7 @@ Description: "Categories of Claim.supportingInfo used on a Special Authority App
 CodeSystem: SAOutcomeCodeCS
 Id: sa-outcome-code
 Title: "SA Outcome Code"
-Description: "Machine readable outcome codes from the single Error Code Catalogue authored and published by the special-authority-application-service (D10). **The catalogue has not yet been published, so this code system is defined with content = not-present.**"
+Description: "Machine readable outcome codes from the Special Authority Error Code Catalogue. **The catalogue has not yet been published, so this code system is defined with content = not-present.**"
 * ^status = #draft
 * ^experimental = false
 * ^caseSensitive = true

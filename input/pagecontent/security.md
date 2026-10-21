@@ -1,7 +1,6 @@
 ### Authentication and authorisation
 
-Authentication and authorisation mechanics are defined in the *HSAAP Special Authority - Security (Auth & Auth) Design*.
-In summary:
+Authentication and authorisation follow the Health NZ Digital Services Hub security model. In summary:
 
 * Every request requires a validated OAuth 2.0 access token and a validated signed **Request-Context** header.
 * The authenticated requester identity is taken from the token and Request-Context header, **never** from the FHIR payload.

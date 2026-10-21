@@ -1,8 +1,7 @@
-# HSAAP Special Authority FHIR Implementation Guide
+# Special Authority FHIR Implementation Guide
 
-FHIR R4 Implementation Guide for the HSAAP Special Authority sector facing API (Submit Application,
-Enquire Application, Enquire Approval). Derived from *HSAAP Special Authority - Sector Facing APIs
-Detailed Design* v0.8.1. Built with SUSHI and the HL7 IG Publisher using the Health NZ template.
+FHIR R4 Implementation Guide for the Health NZ Special Authority sector facing API (Submit Application,
+Enquire Application, Enquire Approval). Built with SUSHI and the HL7 IG Publisher using the Health NZ template.
 
 ## Build
 

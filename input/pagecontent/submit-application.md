@@ -23,7 +23,7 @@ Bundle (collection)
 Application is only meaningful with its questionnaire, patient and practitioner context, and these are accepted or
 rejected atomically. All references between entries SHALL resolve within the Bundle.
 
-Examples: [direct FHIR submission](Bundle-sa-example-submission-bundle.html) and
+Example: [submission Bundle](Bundle-sa-example-submission-bundle.html).
 
 ### The Application (Claim)
 
@@ -69,7 +69,7 @@ role code:
 The Applicant's CPN is taken from the validated access token in preference to the payload. Where a CPN is present in the
 payload and disagrees with the token, the submission is rejected.
 
-The Referrer is **asserted by the Applicant**. It is never authenticated or verified, and neither channel establishes that
+The Referrer is **asserted by the Applicant**. It is never authenticated or verified, and the service does not establish that
 the named Referrer agreed to the referral.
 
 ### Patient
@@ -107,6 +107,4 @@ Examples: [approved](Bundle-sa-example-response-bundle-approved.html) and
 ### Resubmission
 
 The service assesses fail fast and returns one outcome per submission. A prescriber who corrects one problem and
-resubmits will receive an assessment of the corrected Application. Clients translating from HL7 v2 SHALL ensure a
-corrected resubmission carries a new `ZSS-4` Unique Sequence Number, since legacy replays the archived response for a
-duplicate submission key.
+resubmits will receive an assessment of the corrected Application.

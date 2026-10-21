@@ -8,9 +8,9 @@ Extension: ReferringPractitioner
 Id: referring-practitioner
 Title: "Referring Practitioner"
 Description: """
-The referring practitioner for a Special Authority Application (D5). Matches the legacy `PRD` Referring role.
+The referring practitioner for a Special Authority Application.
 
-The referrer is **asserted by the applicant**. It is never authenticated and never verified, and neither channel establishes
+The referrer is **asserted by the applicant**. It is never authenticated and never verified, and the service does not establish
 that the named referrer agreed to the referral. Only registration details are held for the referrer.
 """
 * ^status = #draft
@@ -38,11 +38,10 @@ Description: """
 **Asserted** source context for a submission. This is provenance only: it MUST NOT override the authenticated identity,
 and MUST NOT be used for authentication or authorisation.
 
-The SOAP to FHIR Broker populates this from the legacy HL7 payload (`ZSS.1`, `ZSL.1`-`ZSL.4`, `ZSU.1`). Direct FHIR
-clients may omit it, in which case the API derives the values from the authenticated channel context.
+Clients may omit it, in which case the API derives the values from the authenticated channel context.
 
-**Note:** the detailed design places this extension on `Bundle`. In FHIR R4 `Bundle` is a `Resource`, not a
-`DomainResource`, and cannot carry extensions, so this guide places it on the focal `Claim`. See Design Notes.
+In FHIR R4 `Bundle` is a `Resource`, not a `DomainResource`, and cannot carry extensions, so this extension is carried
+on the focal `Claim`. See Modelling Notes.
 """
 * ^status = #draft
 * ^context[0].type = #element
@@ -54,17 +53,17 @@ clients may omit it, in which case the API derives the values from the authentic
     sourceSystemVendor 0..1 MS and
     sourceSubmittedAt 0..1 MS and
     submittingUserName 0..1 MS
-* extension[practiceId] ^short = "Legacy Practice Id (ZSS.1)"
+* extension[practiceId] ^short = "Practice Id"
 * extension[practiceId].value[x] only string
-* extension[workstationId] ^short = "PMS workstation / PC Id (ZSL.1)"
+* extension[workstationId] ^short = "PMS workstation / PC Id"
 * extension[workstationId].value[x] only string
-* extension[sourceSystemId] ^short = "PMS Id (ZSL.2)"
+* extension[sourceSystemId] ^short = "PMS Id"
 * extension[sourceSystemId].value[x] only string
-* extension[sourceSystemVendor] ^short = "Client vendor (ZSL.3)"
+* extension[sourceSystemVendor] ^short = "Client vendor"
 * extension[sourceSystemVendor].value[x] only string
-* extension[sourceSubmittedAt] ^short = "Client timestamp, source system clock (ZSL.4)"
+* extension[sourceSubmittedAt] ^short = "Client timestamp, source system clock"
 * extension[sourceSubmittedAt].value[x] only dateTime
-* extension[submittingUserName] ^short = "PMS login user name (ZSU.1) - not an authenticated identity"
+* extension[submittingUserName] ^short = "PMS login user name - not an authenticated identity"
 * extension[submittingUserName].value[x] only string
 
 // --- ClaimResponse extensions ------------------------------------------------
@@ -73,11 +72,11 @@ Extension: ApplicationStatus
 Id: application-status
 Title: "Application Status"
 Description: """
-The HSAAP status and outcome of a Special Authority Application. The same shape is returned whether the status
-arrives synchronously from `$submit` or later through Application Enquiry (D22).
+The status and outcome of a Special Authority Application. The same shape is returned whether the status
+arrives synchronously from `$submit` or later through Application Enquiry.
 
 Carried on `ClaimResponse`. It may also be carried on `Claim` in Application Enquiry results so that the
-`application-status` search parameter on `Claim` has an element to evaluate (see Design Notes).
+`application-status` search parameter on `Claim` has an element to evaluate (see Modelling Notes).
 """
 * ^status = #draft
 * ^context[0].type = #element
@@ -107,7 +106,7 @@ Id: existing-approval
 Title: "Existing Approval"
 Description: """
 Detail of a conflicting Approval, returned only on the synchronous `$submit` response where the Application was
-declined because a conflicting Approval exists. Not returned on Application Enquiry (D22).
+declined because a conflicting Approval exists. Not returned on Application Enquiry.
 """
 * ^status = #draft
 * ^context[0].type = #element
@@ -130,11 +129,11 @@ Id: approval-detail
 Title: "Approval Detail"
 Description: """
 Approval facts that have no existing FHIR element, including the Approval status and the provider (pharmacy)
-identity (D16, D24). Approval status is carried here because `ClaimResponse.status` is bound to the financial
+identity. Approval status is carried here because `ClaimResponse.status` is bound to the financial
 resource status value set, which cannot express ACTIVE, CANCELLED or REVOKED.
 
 `formNumber` and `formVersion` are facts about the Approval. They deliberately do **not** reuse the
-`Questionnaire.url|version` canonical used for submission (D16).
+`Questionnaire.url|version` canonical used for submission.
 """
 * ^status = #draft
 * ^context[0].type = #element
@@ -147,7 +146,7 @@ resource status value set, which cannot express ACTIVE, CANCELLED or REVOKED.
     formVersion 0..1 MS and
     providerIdType 0..1 MS and
     providerId 0..1 MS
-* extension[approvalType] ^short = "CHEM | RISK | HOSP | EXCP | TEMPLETON ... (legacy ZST.8)"
+* extension[approvalType] ^short = "CHEM | RISK | HOSP | EXCP | TEMPLETON ..."
 * extension[approvalType].value[x] only code
 * extension[approvalType].valueCode from SAApprovalTypeVS (extensible)
 * extension[status] ^short = "ACTIVE | CANCELLED | REVOKED"
@@ -155,7 +154,7 @@ resource status value set, which cannot express ACTIVE, CANCELLED or REVOKED.
 * extension[status].valueCode from SAApprovalStatusVS (required)
 * extension[formNumber] ^short = "Schedule form number. Absent for EXCP and TEMPLETON."
 * extension[formNumber].value[x] only string
-* extension[formVersion] ^short = "Schedule form version. Null-tolerant: absent for pre-HSAAP Approvals."
+* extension[formVersion] ^short = "Schedule form version. May be absent for older Approvals."
 * extension[formVersion].value[x] only string
 * extension[providerIdType] ^short = "CLAIMANT_NUMBER"
 * extension[providerIdType].value[x] only code
@@ -170,9 +169,9 @@ Extension: ApprovalCoverage
 Id: approval-coverage
 Title: "Approval Coverage"
 Description: """
-Coverage of an Approval, carried **only** for EXPLICIT_PHARMACEUTICALS, PRODUCT_CATEGORY and ALL_PHARMACEUTICALS
-(D15). Absent for SCHEDULE_HIERARCHY coverage: a standard CHEM/RISK Approval's coverage is re-derivable from
-`approval-detail.formNumber` and `formVersion` against the schedule (D6). NPPA and panel Approvals have no schedule
+Coverage of an Approval, carried **only** for EXPLICIT_PHARMACEUTICALS, PRODUCT_CATEGORY and ALL_PHARMACEUTICALS.
+Absent for SCHEDULE_HIERARCHY coverage: a standard CHEM/RISK Approval's coverage is re-derivable from
+`approval-detail.formNumber` and `formVersion` against the schedule. NPPA and panel Approvals have no schedule
 form to derive coverage from, so their coverage is carried explicitly.
 """
 * ^status = #draft

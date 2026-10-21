@@ -13,17 +13,17 @@ Approvals are returned as [SA Approval ClaimResponse](StructureDefinition-sa-app
 | `meta.lastUpdated` | When this Approval version was created |
 | [approval-detail](StructureDefinition-approval-detail.html) | Approval type, **status** (ACTIVE / CANCELLED / REVOKED), form number and version, provider (pharmacy) |
 | [approval-coverage](StructureDefinition-approval-coverage.html) | Coverage - **only** for NPPA and panel Approvals |
-| `status`, `outcome` | Always `active` and `complete`. Mandatory in FHIR R4; carry no HSAAP meaning. |
+| `status`, `outcome` | Always `active` and `complete`. Mandatory in FHIR R4; carry no Special Authority meaning. |
 {:.grid}
 
 **Status.** `ClaimResponse.status` is bound to the financial resource status value set and cannot express the Approval
-Store's ACTIVE, CANCELLED or REVOKED. Read the Approval status from `approval-detail.status`.
+statuses ACTIVE, CANCELLED or REVOKED. Read the Approval status from `approval-detail.status`.
 
 **Coverage.** A standard CHEM/RISK Approval's coverage is derivable from `approval-detail.formNumber` and `formVersion`
 against the schedule, so it is not returned. NPPA and panel Approvals have no schedule form, so their coverage is carried
-explicitly (D15).
+explicitly.
 
-**Freshness.** The ClaimResponse is built from the current Approval Store record on every enquiry. It is not a replay of
+**Freshness.** The ClaimResponse is built from the current Approval record on every enquiry. It is not a replay of
 the ClaimResponse returned at submission, because cancellation, revocation and update all create new Approval versions.
 
 Examples: [CHEM Approval](ClaimResponse-sa-example-approval-chem.html),
@@ -61,7 +61,7 @@ Rules:
 
 ### Approval versions
 
-Approval versions are **not** FHIR resource versions (D17). `meta.versionId` is not populated and `vread` / `_history`
+Approval versions are **not** FHIR resource versions. `meta.versionId` is not populated and `vread` / `_history`
 are not supported. By default only the latest version of each Approval is returned. With `approval-version-state=ALL`,
 each version is returned as a **distinct** ClaimResponse sharing the same Approval Number, ordered by
 `meta.lastUpdated`. `PREVIOUS` returns superseded versions only. A specific historical version cannot be retrieved
