@@ -12,14 +12,14 @@ Usage: #definition
 Title: "Special Authority FHIR API"
 
 // * url = "https://fhir-ig.digital.health.nz/special-authority/CapabilityStatement/SpecialAuthorityCapabilityStatement"
-* version = "0.1.2"
+* version = "0.1.3"
 * name = "SpecialAuthorityFHIRAPICapabilityStatement"
 * title = "Special Authority FHIR Server Capability Statement"
 * description = "Health NZ | Te Whatu Ora Special Authority FHIR API"
 * status = #draft
 * experimental = false
 * kind = #instance
-* date = "2026-10-15"
+* date = "2026-11-17"
 * publisher = "Health New Zealand | Te Whatu Ora"
 * contact[+].name = "Health New Zealand | Te Whatu Ora"
 * contact[=].telecom[+].system = #url
@@ -28,7 +28,7 @@ Title: "Special Authority FHIR API"
 * contact[=].telecom[=].value = "integration@tewhatuora.govt.nz"
 
 * implementation.description = "Production Special Authority FHIR API"
-* implementation.url = "https://api.sa.digital.health.nz/s2s/fhir/R4"
+* implementation.url = "https://api.sa.digital.health.nz/s2s/fhir/r4"
 * fhirVersion = #4.0.1
 * format = #application/fhir+json
 
@@ -48,10 +48,10 @@ Title: "Special Authority FHIR API"
 * extension[HnzApiSpecBuilderExtension].extension[externalDocs].valueUri = "https://fhir-ig.digital.health.nz/special-authority"
 
 * rest[0].mode = #server
-* rest[0].documentation = "All token searches on identifiers SHALL be system-qualified (system|value). All requests require a validated access token and a validated signed Request-Context header."
+* rest[0].documentation = "All token searches on identifiers SHALL be system-qualified (system|value). Search Applications and Search Approvals SHALL use POST [type]/_search with an application/x-www-form-urlencoded body. Retrieval by Application Number or Approval Number uses GET. All requests require a validated access token and a validated signed Request-Context header."
 * rest[0].security.cors = false
 * rest[0].security.service = http://terminology.hl7.org/CodeSystem/restful-security-service#SMART-on-FHIR
-* rest[0].security.description = "OAuth 2.0 client credentials flow and signed Request-Context header, per the Health NZ Digital Services Hub onboarding process. The authenticated requester identity is never taken from the FHIR payload."
+* rest[0].security.description = "OAuth 2.0 client credentials flow and signed Request-Context header, per the Health NZ Digital Services Hub onboarding process. The token audience is the environment base domain, e.g. https://api.sa.digital.health.nz. Scopes: system/Claim.c (Submit Application), system/Claim.rs (Retrieve and Search Applications), system/ClaimResponse.rs (Application Outcome and Approval enquiry). The authenticated requester identity is never taken from the FHIR payload."
 * rest[0].security.extension[+].url = "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris"
 * rest[0].security.extension[=].extension[+].url = "token"
 * rest[0].security.extension[=].extension[=].valueUri = "https://auth.services.health.nz/realms/hnz-integration/protocol/openid-connect/token"
@@ -64,9 +64,9 @@ Title: "Special Authority FHIR API"
 * rest[0].resource[0].type = #Claim
 * rest[0].resource[0].profile = "https://fhir-ig.digital.health.nz/special-authority/StructureDefinition/sa-claim"
 * rest[0].resource[0].supportedProfile[0] = "https://fhir-ig.digital.health.nz/special-authority/StructureDefinition/sa-claim"
-* rest[0].resource[0].documentation = "Special Authority Applications. Submitted with $submit; enquired with search."
+* rest[0].resource[0].documentation = "Special Authority Applications. Submitted with $submit; enquired with search. Search Applications SHALL use POST Claim/_search and SHALL supply at least one of identifier (Application Number), patient.identifier (NHI) or requestor:Practitioner.identifier (HPI CPN or registration). application-status and created narrow a result set only."
 * rest[0].resource[0].interaction[0].code = #search-type
-* rest[0].resource[0].interaction[0].documentation = "Search Applications, or retrieve a submitted Application by Application Number with _include. Search results are summary representations: referenced resources are only resolved via _include."
+* rest[0].resource[0].interaction[0].documentation = "Search Applications with POST Claim/_search, or retrieve a submitted Application by Application Number with GET and _include. Search results are summary representations: referenced resources are only resolved via _include."
 * rest[0].resource[0].searchInclude[0] = "Claim:patient"
 * rest[0].resource[0].searchInclude[1] = "Claim:requestor"
 * rest[0].resource[0].searchInclude[2] = "Claim:supportinginfo"
@@ -82,8 +82,9 @@ Title: "Special Authority FHIR API"
 * rest[0].resource[1].type = #ClaimResponse
 * rest[0].resource[1].supportedProfile[0] = "https://fhir-ig.digital.health.nz/special-authority/StructureDefinition/sa-application-claimresponse"
 * rest[0].resource[1].supportedProfile[1] = "https://fhir-ig.digital.health.nz/special-authority/StructureDefinition/sa-approval-claimresponse"
-* rest[0].resource[1].documentation = "Application outcomes (searched by request.identifier) and Approvals (searched by Approval Number, NHI or practitioner). An Approval search SHALL supply at least one of identifier, patient.identifier or requestor:Practitioner.identifier. approval-valid-on and approval-expiring are mutually exclusive."
+* rest[0].resource[1].documentation = "Application outcomes (searched by request.identifier) and Approvals (searched by Approval Number, NHI or practitioner). Search Approvals SHALL use POST ClaimResponse/_search and SHALL supply at least one of identifier, patient.identifier or requestor:Practitioner.identifier. approval-valid-on and approval-expiring are mutually exclusive."
 * rest[0].resource[1].interaction[0].code = #search-type
+* rest[0].resource[1].interaction[0].documentation = "Search Approvals with POST ClaimResponse/_search. Retrieve an Approval, Retrieve Application Outcome and Search Application by Approval Number use GET with system-qualified identifiers."
 * rest[0].resource[1].searchInclude[0] = "ClaimResponse:request"
 * rest[0].resource[1] insert SearchParam(identifier, http://hl7.org/fhir/SearchParameter/ClaimResponse-identifier, token, Approval Number. SHALL be system-qualified.)
 * rest[0].resource[1] insert SearchParam(request, http://hl7.org/fhir/SearchParameter/ClaimResponse-request, reference, Supports the chained form request.identifier=application-number-system|applicationNumber.)

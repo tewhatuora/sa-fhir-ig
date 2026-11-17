@@ -48,9 +48,13 @@ and `ClaimResponse` are constrained out rather than left unused and optional.
 | [Submit Application](submit-application.html) | `POST [base]/Claim/$submit` |
 | [Retrieve a submitted Application](enquire-application.html#retrieve-a-submitted-application) | `GET [base]/Claim?identifier=...&_include=...` |
 | [Retrieve Application Outcome](enquire-application.html#retrieve-application-outcome) | `GET [base]/ClaimResponse?request.identifier=...` |
-| [Search Applications](enquire-application.html#search-applications) | `GET [base]/Claim?...` |
-| [Retrieve / Search Approvals](enquire-approval.html) | `GET [base]/ClaimResponse?...` |
+| [Search Applications](enquire-application.html#search-applications) | `POST [base]/Claim/_search` |
+| [Retrieve an Approval](enquire-approval.html#retrieve-an-approval) | `GET [base]/ClaimResponse?identifier=...` |
+| [Search Approvals](enquire-approval.html#search-approvals) | `POST [base]/ClaimResponse/_search` |
 {:.grid}
+
+`[base]` is the environment base URL, e.g. `https://api.sa.digital.health.nz/s2s/fhir/r4` in production (see
+[Environments](security.html#environments)). Search Applications and Search Approvals use `POST _search`.
 
 The full API is described by the [Special Authority FHIR API CapabilityStatement](CapabilityStatement-SpecialAuthorityFHIRAPICapabilityStatement.html).
 

@@ -4,13 +4,13 @@ Usage: #definition
 Title: "Submit Special Authority Application"
 Description: "Submits a Special Authority Application. The request body is an SA Submission Bundle; the response is an SA Response Bundle."
 * url = "https://fhir-ig.digital.health.nz/special-authority/OperationDefinition/sa-claim-submit"
-* version = "0.1.2"
+* version = "0.1.3"
 * name = "SASubmitApplication"
 * title = "Submit Special Authority Application"
 * status = #draft
 * kind = #operation
 * experimental = false
-* date = "2026-10-15"
+* date = "2026-11-17"
 * publisher = "Health New Zealand | Te Whatu Ora"
 * description = "Submits a Special Authority Application as a single, atomically accepted or rejected SA Submission Bundle. The Bundle is POSTed directly as the request body (Content-Type application/fhir+json). The response is an SA Response Bundle containing an SA Application ClaimResponse."
 * affectsState = true

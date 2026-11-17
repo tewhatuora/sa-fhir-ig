@@ -42,13 +42,17 @@ Example: [pending review](ClaimResponse-sa-example-cr-pending.html).
 
 ### Search Applications
 
+Search Applications uses the FHIR **`POST [base]/Claim/_search`** form, with the search parameters in a form-encoded body.
+
 ```
-GET [base]/Claim?identifier={application-number-system}|{applicationNumber}
-GET [base]/Claim?patient.identifier=https://standards.digital.health.nz/ns/nhi-id|{nhi}
-GET [base]/Claim?requestor:Practitioner.identifier=https://standards.digital.health.nz/ns/hpi-person-id|{cpn}
-GET [base]/Claim?requestor:Practitioner.identifier=https://standards.digital.health.nz/ns/medical-council-id|{registrationNumber}
-GET [base]/Claim?application-status=PENDING_REVIEW
-GET [base]/Claim?created=ge2026-01-01&created=le2026-01-31
+POST [base]/Claim/_search
+Content-Type: application/x-www-form-urlencoded
+Accept: application/fhir+json
+
+patient.identifier=https://standards.digital.health.nz/ns/nhi-id|{nhi}
+&application-status=PENDING_REVIEW
+&created=ge2026-01-01
+&created=le2026-12-31
 ```
 
 | Parameter | Definition | Notes |
@@ -60,8 +64,17 @@ GET [base]/Claim?created=ge2026-01-01&created=le2026-01-31
 | `created` | core | `ge` / `le` bound the submission date range. |
 {:.grid}
 
-Filters may be combined. Search results are **summary** representations: referenced `Patient`, `Practitioner`,
-`Organization` and `QuestionnaireResponse` resources are not resolved. Use
+Rules:
+
+* A search SHALL supply at least one of the Application Number (`identifier`), the NHI (`patient.identifier`), or a
+  practitioner identifier (HPI CPN or registration, via `requestor:Practitioner.identifier`). `application-status` and
+  `created` narrow a result set rather than define one. A search supplying none of the defining criteria is rejected.
+* To find an Application by its **Approval Number**, use
+  [Search Application by Approval Number](#search-application-by-approval-number).
+* Filters may be combined.
+
+Search results are **summary** representations: referenced `Patient`, `Practitioner`, `Organization` and
+`QuestionnaireResponse` resources are not resolved. Use
 [Retrieve a submitted Application](#retrieve-a-submitted-application) for full detail.
 
 ### Search Application by Approval Number

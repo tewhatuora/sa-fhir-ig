@@ -4,10 +4,10 @@
 
 RuleSet: SASearchParameter(id, code)
 * url = "https://fhir-ig.digital.health.nz/special-authority/SearchParameter/{id}"
-* version = "0.1.2"
+* version = "0.1.3"
 * status = #draft
 * experimental = false
-* date = "2026-10-15"
+* date = "2026-11-17"
 * publisher = "Health New Zealand | Te Whatu Ora"
 * jurisdiction = urn:iso:std:iso:3166#NZ "New Zealand"
 * code = #{code}

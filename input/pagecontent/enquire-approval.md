@@ -37,6 +37,19 @@ GET [base]/ClaimResponse?identifier=https://fhir-ig.digital.health.nz/special-au
 
 ### Search Approvals
 
+Search Approvals uses the FHIR **`POST [base]/ClaimResponse/_search`** form, with the search parameters in a form-encoded
+body.
+
+```
+POST [base]/ClaimResponse/_search
+Content-Type: application/x-www-form-urlencoded
+Accept: application/fhir+json
+
+patient.identifier=https://standards.digital.health.nz/ns/nhi-id|{nhi}
+&approval-status=ACTIVE
+&approval-valid-on=2026-09-18
+```
+
 | Filter | FHIR parameter | Example |
 |---|---|---|
 | NHI | `patient.identifier` | `patient.identifier=https://standards.digital.health.nz/ns/nhi-id\|ZZZ0016` |
@@ -71,12 +84,14 @@ Example: [all versions of an Approval for a patient](Bundle-sa-example-approval-
 
 ### Worked examples
 
-| Purpose | FHIR request |
+Each example is the form-encoded body of `POST [base]/ClaimResponse/_search`.
+
+| Purpose | Search body |
 |---|---|
-| All (current and historical) Approvals for a patient | `GET [base]/ClaimResponse?patient.identifier={nhi-system}\|{nhi}&approval-version-state=ALL` |
-| Current Approvals for a patient valid today | `GET [base]/ClaimResponse?patient.identifier={nhi-system}\|{nhi}&approval-valid-on=2026-10-15` |
-| Current Approvals for a pharmacy | `GET [base]/ClaimResponse?approval-provider-id={claimant-number-system}\|{providerId}` |
-| Current Approvals by prescriber | `GET [base]/ClaimResponse?requestor:Practitioner.identifier={hpi-cpn-system}\|{cpn}` |
-| All Approvals by prescriber | `GET [base]/ClaimResponse?requestor:Practitioner.identifier={hpi-cpn-system}\|{cpn}&approval-version-state=ALL` |
-| Active Approvals expiring this quarter, by registration | `GET [base]/ClaimResponse?requestor:Practitioner.identifier={registration-system}\|{number}&approval-expiring=ge2026-10-01&approval-expiring=le2026-12-31&approval-status=ACTIVE` |
+| All (current and historical) Approvals for a patient | `patient.identifier={nhi-system}\|{nhi}&approval-version-state=ALL` |
+| Current Approvals for a patient valid today | `patient.identifier={nhi-system}\|{nhi}&approval-valid-on=2026-11-17` |
+| Current Approvals for a pharmacy | `approval-provider-id={claimant-number-system}\|{providerId}` |
+| Current Approvals by prescriber | `requestor:Practitioner.identifier={hpi-cpn-system}\|{cpn}` |
+| All Approvals by prescriber | `requestor:Practitioner.identifier={hpi-cpn-system}\|{cpn}&approval-version-state=ALL` |
+| Active Approvals expiring this quarter, by registration | `requestor:Practitioner.identifier={registration-system}\|{number}&approval-expiring=ge2026-10-01&approval-expiring=le2026-12-31&approval-status=ACTIVE` |
 {:.grid}

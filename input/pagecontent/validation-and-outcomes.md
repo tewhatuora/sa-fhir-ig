@@ -7,7 +7,7 @@ Applications.
 
 | Performed by the API | Performed by the service |
 |---|---|
-| Token validity, scopes and client identity | Form number and version resolve to a form in the Pharmaceutical Schedule |
+| Token validity, scopes and client identity; search minimum criteria | Form number and version resolve to a form in the Pharmaceutical Schedule |
 | Well formed FHIR and conformance to the SA profiles | Every `criterionIdentifier` exists in that exact form version, with no duplicates |
 | Presence of the QuestionnaireResponse and mandatory referenced resources | Answer datatypes match the criterion types in the form |
 | Form canonical present, well formed and version-pinned | NHI is well formed and resolves |
