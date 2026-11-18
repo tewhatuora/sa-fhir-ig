@@ -53,6 +53,10 @@ registration number in `Identifier.value`.
 
 The HPI CPN is optional in the payload. For the Applicant, where a CPN is present it SHALL agree with the CPN claim in the
 validated access token or the submission is rejected. No CPN is held for the Referrer.
+
+The address uses the NZ Base `NzAddress` datatype, as for SA Patient. The first address is the Applicant's work address.
+Suburb is carried **only** in the NZ Base suburb extension - consumers SHALL NOT fall back to `Address.district` or
+parse `Address.line`. `NzAddress` building name, domicile code and geocode are not retained and are dropped by the API.
 """
 * ^status = #draft
 * obeys sa-prac-1
@@ -68,7 +72,14 @@ validated access token or the submission is rejected. No CPN is held for the Ref
 * identifier[cpn].value 1..1
 * name 1..* MS
 * address MS
-* address ^comment = "The first address is treated as the work address of the Applicant."
+* address only $NzAddress
+* address ^comment = "The first address is treated as the work address of the Applicant. Suburb is carried only in the NZ Base suburb extension."
+* address.line MS
+* address.extension[suburb] MS
+* address.city MS
+* address.postalCode MS
+* address.country MS
+* address.country ^comment = "ISO 3166 country code."
 
 Profile: SAOrganization
 Parent: $NzOrganization

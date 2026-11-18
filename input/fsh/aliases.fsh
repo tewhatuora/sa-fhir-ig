@@ -6,6 +6,7 @@
 Alias: $NzPatient = http://hl7.org.nz/fhir/StructureDefinition/NzPatient
 Alias: $NzPractitioner = http://hl7.org.nz/fhir/StructureDefinition/NzPractitioner
 Alias: $NzOrganization = http://hl7.org.nz/fhir/StructureDefinition/NzOrganization
+Alias: $NzAddress = http://hl7.org.nz/fhir/StructureDefinition/NzAddress
 Alias: $suburb = http://hl7.org.nz/fhir/StructureDefinition/suburb
 
 // NZ identifier namespaces (defined in NZ Base)

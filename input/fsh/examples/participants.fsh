@@ -39,6 +39,7 @@ Description: "Example applicant practitioner with an HPI CPN and a Medical Counc
 * name[0].prefix[0] = "Dr"
 * address[0].use = #work
 * address[0].line[0] = "1 Main Highway"
+* address[0].extension[suburb].valueString = "Otaki Beach"
 * address[0].city = "Otaki"
 * address[0].postalCode = "5512"
 * address[0].country = "NZ"
